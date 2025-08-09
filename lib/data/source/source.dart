@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
+
 import '../model/song.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,14 +12,22 @@ abstract interface class DataSource {
 class RemoteDataSource implements DataSource {
   @override
   Future<List<Song>?> loadData() async {
-    const url = "https://thantrieu.com/resources/braniumapis/songs.json";
+    const url = "https://thantrieu.com/resources/braniumapis/songs.json1";
     final uri = Uri.parse(url);
     final response = await http.get(uri);
     if (response.statusCode == 200) {
-      final bodyContent = utf8.decode(response.bodyBytes);// nhận diện được tiếng Việt
-      var songWrapper = jsonDecode(bodyContent) as Map;// chuyển đổi sang json sau đó chuyênr sang dạng map
-      var songList = songWrapper['songs'] as List;// lấy ca thành phần bên trong node songs -- tham khảo json từ url trả về
-      List<Song> songs = songList.map((song)=>Song.fromJson(song)).toList();// gọi hàm fromJson trong class Song để chuyển đổi json sang 1 object thuộc class Song
+      final bodyContent = utf8.decode(
+        response.bodyBytes,
+      ); // nhận diện được tiếng Việt
+      var songWrapper =
+          jsonDecode(bodyContent)
+              as Map; // chuyển đổi sang json sau đó chuyênr sang dạng map
+      var songList =
+          songWrapper['songs']
+              as List; // lấy ca thành phần bên trong node songs -- tham khảo json từ url trả về
+      List<Song> songs = songList
+          .map((song) => Song.fromJson(song))
+          .toList(); // gọi hàm fromJson trong class Song để chuyển đổi json sang 1 object thuộc class Song
       return songs;
     }
     return null;
@@ -26,8 +36,13 @@ class RemoteDataSource implements DataSource {
 
 class LocalDataSource implements DataSource {
   @override
-  Future<List<Song>?> loadData() {
-    // TODO: implement loadData
-    throw UnimplementedError();
+  Future<List<Song>?> loadData() async {
+    final String response = await rootBundle.loadString('assets/songs.json');
+    final jsonBody = jsonDecode(response) as Map;
+    final songList = jsonBody['songs'] as List;
+    List<Song> songs = songList
+        .map((song) => Song.fromJson(song))
+        .toList(); // gọi hàm fromJson trong class Song để chuyển đổi json sang 1 object thuộc class Song
+    return songs;
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:main_gui/data/repository/repository.dart';
 
 void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   var res = DefaultRepository();
   var songs = await res.loadData();
   if(songs != null){
