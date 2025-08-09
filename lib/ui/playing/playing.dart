@@ -36,7 +36,6 @@ class _NowPlayingPageState extends State<NowPlayingPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _imageAnimController;
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -49,12 +48,9 @@ class _NowPlayingPageState extends State<NowPlayingPage>
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery
-        .of(
+    final screenWidth = MediaQuery.of(
       context,
-    )
-        .size
-        .width; // chiều rộng màn hình
+    ).size.width; // chiều rộng màn hình
     final screenHeight = MediaQuery.of(context).size.height;
     final size = min(screenWidth, screenHeight);
     const delta = 64;
@@ -91,10 +87,54 @@ class _NowPlayingPageState extends State<NowPlayingPage>
                     width: size - delta,
                     height: size - delta,
                     imageErrorBuilder: (context, error, stackTrace) {
-                      return Image.asset('assets/images/music_default_icon.png',
-                          width: size - delta,
-                          height: size - delta);
+                      return Image.asset(
+                        'assets/images/music_default_icon.png',
+                        width: size - delta,
+                        height: size - delta,
+                      );
                     },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 64, bottom: 16),
+                child: SizedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.share_outlined),
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            widget.playingSong.title,
+                            style: Theme.of(context).textTheme.bodyMedium!
+                                .copyWith(
+                                  color: Theme.of(
+                                    context,
+                                  ).textTheme.bodyMedium!.color,
+                                ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            widget.playingSong.artist,
+                            style: Theme.of(context).textTheme.bodyMedium!
+                                .copyWith(
+                                  color: Theme.of(
+                                    context,
+                                  ).textTheme.bodyMedium!.color,
+                                ),
+                          ),
+                        ],
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.favorite_outline),
+                      ),
+                    ],
                   ),
                 ),
               ),
