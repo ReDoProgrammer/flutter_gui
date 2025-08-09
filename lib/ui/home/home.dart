@@ -20,7 +20,7 @@ class MusicApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: MusicHomePage(),
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,// tắt biểu tượng debug ở góc phải phía trên của app khi chạy
     );
   }
 }
