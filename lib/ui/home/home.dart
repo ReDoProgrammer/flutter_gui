@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:main_gui/ui/discovery/discovery.dart';
+import 'package:main_gui/ui/home/viewmodel.dart';
 import 'package:main_gui/ui/settings/settings.dart';
 import 'package:main_gui/ui/user/profile.dart';
 
@@ -43,7 +44,10 @@ class _MusicHomePageState extends State<MusicHomePage> {
       navigationBar: const CupertinoNavigationBar(middle: Text('Music App')),
       child: CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
-          backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
+          backgroundColor: Theme
+              .of(context)
+              .colorScheme
+              .onInverseSurface,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(
@@ -85,10 +89,67 @@ class _HomeTabPageState extends State<HomeTabPage> {
   //thay đổi giao diện của homepage ở đây
 
   List<Song> songs = [];
-  
+  late MusicAppViewModel _viewModel;
+
+  @override
+  void initState() {
+    _viewModel = MusicAppViewModel();
+    _viewModel.loadSongs();
+    observeData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: getBody(),
+    );
+  }
+
+  Widget getBody() {
+    bool showLoading = songs.isEmpty;
+    if (showLoading) {
+      return getProgressBar();
+    } else {
+      return getListView();
+    }
+  }
+
+  Widget getProgressBar() {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  ListView getListView() {
+    //separated phân tách các phần tử
+    return ListView.separated(
+      itemBuilder: (context,position){
+        return getRow(position);
+      },
+      separatorBuilder: (context,index){
+        return Divider(
+          color: Colors.grey,
+          thickness: 1 ,// độ da 1px
+          indent: 24,// cách bên trái
+          endIndent: 24,//cách bên phải
+        );
+      },
+      itemCount: songs.length,
+      shrinkWrap: true, // tạo mảng cố định, có thể cuộn được
+    );
+  }
+
+  Widget getRow(int index){
+    return Center(
+      child: Text(songs[index].title),
+    );
+  }
+  void observeData() {
+    _viewModel.songStream.stream.listen((songList) {
+      setState(() {
+        songs.addAll(songList);
+      });
+    });
   }
 }
-
