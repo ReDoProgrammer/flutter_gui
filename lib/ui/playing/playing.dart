@@ -152,9 +152,30 @@ class _NowPlayingPageState extends State<NowPlayingPage>
                 ),
                 child: _progressBar(),
               ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 24,
+                  right: 24,
+                ),
+                child: _mediaButtons(),
+              ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _mediaButtons(){
+    return SizedBox(
+      child: Row(
+        children: [
+          MediaButtonControl(function: null, icon: Icons.shuffle, color: Colors.deepPurple, size: 24),
+          MediaButtonControl(function: null, icon: Icons.skip_previous, color: Colors.deepPurple, size: 36),
+          MediaButtonControl(function: null, icon: Icons.play_arrow_sharp, color: Colors.deepPurple, size: 48),
+          MediaButtonControl(function: null, icon: Icons.skip_next, color: Colors.deepPurple, size: 36),
+          MediaButtonControl(function: null, icon: Icons.repeat, color: Colors.deepPurple, size: 24)
+        ],
       ),
     );
   }
