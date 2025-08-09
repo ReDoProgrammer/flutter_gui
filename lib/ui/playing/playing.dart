@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,8 +55,10 @@ class _NowPlayingPageState extends State<NowPlayingPage>
     )
         .size
         .width; // chiều rộng màn hình
+    final screenHeight = MediaQuery.of(context).size.height;
+    final size = min(screenWidth, screenHeight);
     const delta = 64;
-    final radius = (screenWidth - 64) / 2;
+    final radius = (size - 64) / 2;
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
@@ -85,12 +88,12 @@ class _NowPlayingPageState extends State<NowPlayingPage>
                   child: FadeInImage.assetNetwork(
                     placeholder: 'assets/images/music_default_icon.png',
                     image: widget.playingSong.image,
-                    width: screenWidth - delta,
-                    height: screenWidth - delta,
+                    width: size - delta,
+                    height: size - delta,
                     imageErrorBuilder: (context, error, stackTrace) {
                       return Image.asset('assets/images/music_default_icon.png',
-                          width: screenWidth - delta,
-                          height: screenWidth - delta);
+                          width: size - delta,
+                          height: size - delta);
                     },
                   ),
                 ),
