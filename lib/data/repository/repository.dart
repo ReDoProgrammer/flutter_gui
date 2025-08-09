@@ -22,7 +22,7 @@ class DefaultRepository implements Repository {
           }
         })
       }else{
-        songs.addAll(remoteSongs);
+        songs.addAll(remoteSongs)
       }
     });
     return songs;
