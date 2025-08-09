@@ -140,7 +140,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
   }
 
   Widget getRow(int index) {
-    return Center(child: Text(songs[index].title));
+    return _SongItemSection(parent: this, song: songs[index]);
   }
 
   void observeData() {
@@ -177,6 +177,9 @@ class _SongItemSection extends StatelessWidget {
           );
         },
       ),
+      title: Text(song.title),
+      subtitle: Text(song.artist),
+      trailing: IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz)),
     );
   }
 }
