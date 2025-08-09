@@ -4,6 +4,8 @@ import 'package:main_gui/ui/discovery/discovery.dart';
 import 'package:main_gui/ui/settings/settings.dart';
 import 'package:main_gui/ui/user/profile.dart';
 
+import '../../data/model/song.dart';
+
 class MusicApp extends StatelessWidget {
   const MusicApp({super.key});
 
@@ -68,6 +70,25 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Home tab')));
+    return const HomeTabPage();
   }
 }
+
+class HomeTabPage extends StatefulWidget {
+  const HomeTabPage({super.key});
+
+  @override
+  State<HomeTabPage> createState() => _HomeTabPageState();
+}
+
+class _HomeTabPageState extends State<HomeTabPage> {
+  //thay đổi giao diện của homepage ở đây
+
+  List<Song> songs = [];
+  
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
