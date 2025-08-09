@@ -32,6 +32,10 @@ class NowPlayingPage extends StatefulWidget {
 class _NowPlayingPageState extends State<NowPlayingPage> {
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;// chiều rộng màn hình
+    const delta = 64;
+    final radius = (screenWidth-64)/2;
+    
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text('Now Playing'),
@@ -50,10 +54,12 @@ class _NowPlayingPageState extends State<NowPlayingPage> {
               const Text('_ ___ _'),
 
               const SizedBox(height: 48),
+
             ],
           ),
         ),
       ),
+
     );
   }
 }
