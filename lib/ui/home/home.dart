@@ -6,6 +6,7 @@ import 'package:main_gui/ui/settings/settings.dart';
 import 'package:main_gui/ui/user/profile.dart';
 
 import '../../data/model/song.dart';
+import '../playing/playing.dart';
 
 class MusicApp extends StatelessWidget {
   const MusicApp({super.key});
@@ -150,6 +151,19 @@ class _HomeTabPageState extends State<HomeTabPage> {
       });
     });
   }
+
+  void navigate(Song song){
+    Navigator.push(context,CupertinoPageRoute(builder: (context){
+      return NowPlaying(
+        songs:songs,
+        playingSong:song
+      );
+    }));
+  }
+
+  void showBottomSheet(){
+
+  }
 }
 
 class _SongItemSection extends StatelessWidget {
@@ -161,8 +175,12 @@ class _SongItemSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: const EdgeInsets.only(// căn chỉnh padding lại cho item
+        left:24,
+        right: 8,
+      ),
       leading: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(16),
         child: FadeInImage.assetNetwork(
           placeholder: 'assets/images/music_default_icon.png',
           // ảnh mặc định khi chưa load được ảnh từ link
@@ -183,9 +201,14 @@ class _SongItemSection extends StatelessWidget {
       title: Text(song.title),
       subtitle: Text(song.artist),
       trailing: IconButton(
-        onPressed: () {},
+        onPressed: () {
+          parent.showBottomSheet();
+        },
         icon: const Icon(Icons.more_horiz),
       ),
+      onTap: (){
+        parent.navigate(song);
+      },
     );
   }
 }
