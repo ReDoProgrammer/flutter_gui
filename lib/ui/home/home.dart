@@ -161,25 +161,31 @@ class _SongItemSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: FadeInImage.assetNetwork(
-        placeholder: 'assets/images/music_default_icon.png',
-        // ảnh mặc định khi chưa load được ảnh từ link
-        image: song.image,
-        width: 48,
-        height: 48,
-        // avatar của bài hát
-        imageErrorBuilder: (context, error, stackTrace) {
-          // trường hợp load ảnh lỗi thì trả về ảnh mặc định
-          return Image.asset(
-            'assets/images/music_default_icon.png',
-            width: 48,
-            height: 48,
-          );
-        },
+      leading: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: FadeInImage.assetNetwork(
+          placeholder: 'assets/images/music_default_icon.png',
+          // ảnh mặc định khi chưa load được ảnh từ link
+          image: song.image,
+          width: 48,
+          height: 48,
+          // avatar của bài hát
+          imageErrorBuilder: (context, error, stackTrace) {
+            // trường hợp load ảnh lỗi thì trả về ảnh mặc định
+            return Image.asset(
+              'assets/images/music_default_icon.png',
+              width: 48,
+              height: 48,
+            );
+          },
+        ),
       ),
       title: Text(song.title),
       subtitle: Text(song.artist),
-      trailing: IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz)),
+      trailing: IconButton(
+        onPressed: () {},
+        icon: const Icon(Icons.more_horiz),
+      ),
     );
   }
 }
