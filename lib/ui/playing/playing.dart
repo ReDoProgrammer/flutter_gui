@@ -169,6 +169,7 @@ class _NowPlayingPageState extends State<NowPlayingPage>
   Widget _mediaButtons(){
     return SizedBox(
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           MediaButtonControl(function: null, icon: Icons.shuffle, color: Colors.deepPurple, size: 24),
           MediaButtonControl(function: null, icon: Icons.skip_previous, color: Colors.deepPurple, size: 36),
