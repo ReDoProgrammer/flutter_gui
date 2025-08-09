@@ -44,10 +44,7 @@ class _MusicHomePageState extends State<MusicHomePage> {
       navigationBar: const CupertinoNavigationBar(middle: Text('Music App')),
       child: CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
-          backgroundColor: Theme
-              .of(context)
-              .colorScheme
-              .onInverseSurface,
+          backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(
@@ -101,9 +98,13 @@ class _HomeTabPageState extends State<HomeTabPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: getBody(),
-    );
+    return Scaffold(body: getBody());
+  }
+
+  @override
+  void dispose() {
+    _viewModel.songStream.close(); // giải phóng bộ nhớ
+    super.dispose();
   }
 
   Widget getBody() {
@@ -116,23 +117,21 @@ class _HomeTabPageState extends State<HomeTabPage> {
   }
 
   Widget getProgressBar() {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
+    return const Center(child: CircularProgressIndicator());
   }
 
   ListView getListView() {
     //separated phân tách các phần tử
     return ListView.separated(
-      itemBuilder: (context,position){
+      itemBuilder: (context, position) {
         return getRow(position);
       },
-      separatorBuilder: (context,index){
+      separatorBuilder: (context, index) {
         return Divider(
           color: Colors.grey,
-          thickness: 1 ,// độ da 1px
-          indent: 24,// cách bên trái
-          endIndent: 24,//cách bên phải
+          thickness: 1, // độ da 1px
+          indent: 24, // cách bên trái
+          endIndent: 24, //cách bên phải tương tự padding
         );
       },
       itemCount: songs.length,
@@ -140,16 +139,44 @@ class _HomeTabPageState extends State<HomeTabPage> {
     );
   }
 
-  Widget getRow(int index){
-    return Center(
-      child: Text(songs[index].title),
-    );
+  Widget getRow(int index) {
+    return Center(child: Text(songs[index].title));
   }
+
   void observeData() {
     _viewModel.songStream.stream.listen((songList) {
       setState(() {
         songs.addAll(songList);
       });
     });
+  }
+}
+
+class _SongItemSection extends StatelessWidget {
+  const _SongItemSection({required this.parent, required this.song});
+
+  final _HomeTabPageState parent;
+  final Song song;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: FadeInImage.assetNetwork(
+        placeholder: 'assets/images/music_default_icon.png',
+        // ảnh mặc định khi chưa load được ảnh từ link
+        image: song.image,
+        width: 48,
+        height: 48,
+        // avatar của bài hát
+        imageErrorBuilder: (context, error, stackTrace) {
+          // trường hợp load ảnh lỗi thì trả về ảnh mặc định
+          return Image.asset(
+            'assets/images/music_default_icon.png',
+            width: 48,
+            height: 48,
+          );
+        },
+      ),
+    );
   }
 }

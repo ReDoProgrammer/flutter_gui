@@ -60,3 +60,4 @@ flutter:
 
   assets:
   - assets/songs.json
+  - assets/images/music_default_icon.png
