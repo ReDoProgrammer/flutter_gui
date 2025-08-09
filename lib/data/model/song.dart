@@ -26,7 +26,7 @@ class Song {
       artist: map['artist'],
       source: map['source'],
       image: map['image'],
-      duration: int.parse(map['duration'])
+      duration: map['duration']
     );
   }
 }
