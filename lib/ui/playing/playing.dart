@@ -133,6 +133,7 @@ class _NowPlayingPageState extends State<NowPlayingPage>
                       IconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.favorite_outline),
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ],
                   ),
