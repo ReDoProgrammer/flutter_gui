@@ -152,17 +152,45 @@ class _HomeTabPageState extends State<HomeTabPage> {
     });
   }
 
-  void navigate(Song song){
-    Navigator.push(context,CupertinoPageRoute(builder: (context){
-      return NowPlaying(
-        songs:songs,
-        playingSong:song
-      );
-    }));
+  void navigate(Song song) {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) {
+          return NowPlaying(songs: songs, playingSong: song);
+        },
+      ),
+    );
   }
 
-  void showBottomSheet(){
-
+  void showBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return ClipRRect(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+          child: Container(
+            height: 400,
+            color: Colors.grey,
+            child: Center(
+              child: Column(
+                // xếp dọc các phần tử từ trên xuống dưới
+                mainAxisAlignment: MainAxisAlignment.center,
+                // căn giữa theo chiều dọc
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const Text('Modal bottom sheet'),
+                  ElevatedButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('Close'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -175,8 +203,9 @@ class _SongItemSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: const EdgeInsets.only(// căn chỉnh padding lại cho item
-        left:24,
+      contentPadding: const EdgeInsets.only(
+        // căn chỉnh padding lại cho item
+        left: 24,
         right: 8,
       ),
       leading: ClipRRect(
@@ -206,7 +235,7 @@ class _SongItemSection extends StatelessWidget {
         },
         icon: const Icon(Icons.more_horiz),
       ),
-      onTap: (){
+      onTap: () {
         parent.navigate(song);
       },
     );
