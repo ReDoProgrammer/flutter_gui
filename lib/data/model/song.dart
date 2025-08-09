@@ -16,4 +16,17 @@ class Song {
     required this.image,
     required this.duration,
   });
+
+  // constructor laay bai hat tu json
+  factory Song.fromJson(Map<String,dynamic> map){
+    return Song(
+      id: map['id'],
+      title: map['title'],
+      album: map['album'],
+      artist: map['artist'],
+      source: map['source'],
+      image: map['image'],
+      duration: int.parse(map['duration'])
+    );
+  }
 }
